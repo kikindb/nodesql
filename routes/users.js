@@ -2,13 +2,16 @@ const router = require('express').Router();
 const auth = require('../middlewares/auth');
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
-const { User, validate } = require('../models/user');
+const { User, validate, generateAuthToken } = require('../models/user');
 
 //Get current user
-// router.get('/me', auth, async (req, res) => {
-//   const me = await User.findById(req.user._id).select(['-password', '-createdAt', '-isActive', '-role']);
-//   res.send(me);
-// });
+router.get('/me', auth, async (req, res) => {
+  const me = await User.findOne({
+    attributes: ['id', 'name', 'email'],
+    where: { id: req.user.id }
+  });
+  res.send(me);
+});
 
 //Get All Users
 router.get('/', auth, async (req, res) => {
@@ -27,14 +30,16 @@ router.post('/', auth, async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
   console.log(user.dataValues);
-  await User.create({
+  let userRes = await User.create({
     name: user.dataValues.name,
     email: user.dataValues.email,
     password: user.password,
     image: user.dataValues.image || null
   });
 
-  res.send("Hola");
+  const token = generateAuthToken();
+
+  res.status(201).header('x-auth-token', token).send(_.pick(userRes, ['id', 'name', 'email']));
 });
 
 module.exports = router;

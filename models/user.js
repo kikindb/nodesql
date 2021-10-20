@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../startup/db');
 const Joi = require('joi');
+const jwt = require('jsonwebtoken');
 
 const User = sequelize.define('user', {
   id: {
@@ -27,6 +28,11 @@ const User = sequelize.define('user', {
   image: Sequelize.STRING
 });
 
+const generateAuthToken = function (id) {
+  const token = jwt.sign({ id }, "jwtPassword");
+  return token;
+}
+
 function validateUser(user) {
   const schema = Joi.object({
     name: Joi.string().min(2).max(255).required().regex(/^[\w][\w\s]*$/),
@@ -39,3 +45,4 @@ function validateUser(user) {
 
 module.exports.User = User;
 module.exports.validate = validateUser;
+module.exports.generateAuthToken = generateAuthToken;
