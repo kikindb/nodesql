@@ -4,7 +4,6 @@ const sequelize = require('./startup/db');
 const { User } = require('./models/user');
 
 require('./startup/routes')(app);
-
 const port = process.env.PORT || 3000;
 let server;
 

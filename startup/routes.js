@@ -3,6 +3,7 @@ const helmet = require('helmet');
 const users = require('../routes/users');
 const auth = require('../routes/auth');
 const cors = require('cors');
+const morgan = require('morgan');
 
 module.exports = function (app) {
   //TODO: origin based in config
@@ -15,6 +16,7 @@ module.exports = function (app) {
     exposedHeaders: ['Access-Control-Allow-Origin', 'Vary', 'Content-Length', 'x-auth-token']
   }));
   app.use(express.json());
+  app.use(morgan('combined'));
   app.use('/api/users', users);
   app.use('/api/auth', auth);
 }
