@@ -2,9 +2,9 @@ const { Sequelize } = require('sequelize');
 
 console.log('HOST: ', process.env.MYSQL_HOST);
 
-const sequelize = new Sequelize(process.env.DB_NAME, "root", process.env.DB_PASSWORD, {
+const sequelize = new Sequelize(process.env.DB_NAME || 'appdb', "root", process.env.DB_PASSWORD || '9c%7O?PHoj0O', {
   dialect: 'mysql',
-  host: process.env.DB_HOST,
+  host: process.env.DB_HOST || 'localhost',
   retry: {
     match: [
       Sequelize.ConnectionError,

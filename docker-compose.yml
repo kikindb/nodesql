@@ -6,7 +6,7 @@ services:
     image: mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: 9c%7O?PHoj0O
       MYSQL_DATABASE: appdb
     ports:
       - "3306:3306"
@@ -23,7 +23,7 @@ services:
     environment:
       DB_NAME: appdb
       DB_HOST: mysqldb
-      DB_PASSWORD: secret
+      DB_PASSWORD: 9c%7O?PHoj0O
     links:
       - db
     ports:

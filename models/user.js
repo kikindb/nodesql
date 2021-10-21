@@ -5,25 +5,24 @@ const jwt = require('jsonwebtoken');
 
 const User = sequelize.define('user', {
   id: {
-    type: Sequelize.BIGINT.UNSIGNED,
-    autoIncrement: true,
     allowNull: false,
-    primaryKey: true
+    autoIncrement: true,
+    primaryKey: true,
+    type: Sequelize.BIGINT.UNSIGNED
   },
   name: {
-    type: Sequelize.STRING,
     allowNull: false,
+    type: Sequelize.STRING,
     unique: true
   },
   email: {
-    type: Sequelize.STRING,
     allowNull: false,
+    type: Sequelize.STRING,
     unique: true
   },
   password: {
     type: Sequelize.STRING,
-    allowNull: false,
-    unique: true
+    allowNull: false
   },
   image: Sequelize.STRING
 });

@@ -7,7 +7,7 @@ const { User, validate, generateAuthToken } = require('../models/user');
 //Get current user
 router.get('/me', auth, async (req, res) => {
   const me = await User.findOne({
-    attributes: ['id', 'name', 'email'],
+    attributes: ['id', 'name', 'email', 'image'],
     where: { id: req.user.id }
   });
   res.send(me);
