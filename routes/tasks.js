@@ -1,51 +1,14 @@
 const router = require("express").Router();
 const auth = require("../middlewares/auth");
-const _ = require("lodash");
-const { Task, validate } = require("./../models/task");
+const taskController = require("./../controllers/task.controller");
 
 // Get All User Tasks
-router.get("/", auth, async (req, res) => {
-  const tasks = await Task.findAll({ where: { userId: req.user.id } });
-  res.send(tasks);
-});
+router.get("/", auth, taskController.getAllUsers);
 
 // Create a new Task
-router.post("/", auth, async (req, res) => {
-  const { error } = validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
-
-  const task = new Task(
-    _.pick(req.body, ["title", "body", "author", "status", "userId"])
-  );
-
-  let taskRes = await Task.create({
-    title: task.dataValues.title,
-    body: task.dataValues.body,
-    author: task.dataValues.author,
-    status: task.dataValues.status,
-    userId: req.user.id,
-  });
-
-  res
-    .status(201)
-    .send(_.pick(taskRes, ["id", "title", "body", "author", "status"]));
-});
+router.post("/", auth, taskController.createTask);
 
 // Patch a task
-router.patch("/:id", auth, async (req, res) => {
-  const { error } = validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
-  console.log(req.params.id);
-
-  let task = await Task.findOne({ where: { id: req.params.id } });
-  if (!task) return res.status(400).send("No task found.");
-
-  if (task.userId !== req.user.id)
-    return res.status(401).send("User not authorized");
-
-  await task.update(req.body);
-
-  res.status(200).send({ message: "patching... " + req.params.id, task: task });
-});
+router.patch("/:id", auth, taskController.patchTask);
 
 module.exports = router;
