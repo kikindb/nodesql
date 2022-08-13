@@ -7,7 +7,7 @@ async function getMyUserData(req, res) {
     attributes: ["id", "name", "email", "image"],
     where: { id: req.user.id },
   });
-  res.send(me);
+  return res.send(me);
 }
 
 async function getAllUsers(req, res) {
@@ -25,7 +25,7 @@ async function createUser(req, res) {
   user = new User(_.pick(req.body, ["name", "email", "password", "image"]));
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
-  console.log(user.dataValues);
+
   let userRes = await User.create({
     name: user.dataValues.name,
     email: user.dataValues.email,
@@ -35,7 +35,7 @@ async function createUser(req, res) {
 
   const token = generateAuthToken(userRes.id);
 
-  res
+  return res
     .status(201)
     .header("x-auth-token", token)
     .send(_.pick(userRes, ["id", "name", "email"]));

@@ -18,7 +18,7 @@ async function authenticate(req, res) {
     return res.status(400).send({ message: "Invalid email or password" });
 
   const token = generateAuthToken(user.id);
-  res
+  return res
     .header("x-auth-token", token)
     .send(_.pick(user, ["id", "name", "email", "image"]));
 }

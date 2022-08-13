@@ -3,7 +3,7 @@ const { Task, validate } = require("./../models/task");
 
 async function getAllUsers(req, res) {
   const tasks = await Task.findAll({ where: { userId: req.user.id } });
-  res.send(tasks);
+  return res.send(tasks);
 }
 
 async function createTask(req, res) {
@@ -22,7 +22,7 @@ async function createTask(req, res) {
     userId: req.user.id,
   });
 
-  res
+  return res
     .status(201)
     .send(_.pick(taskRes, ["id", "title", "body", "author", "status"]));
 }
@@ -40,7 +40,9 @@ async function patchTask(req, res) {
 
   await task.update(req.body);
 
-  res.status(200).send({ message: "patching... " + req.params.id, task: task });
+  return res
+    .status(200)
+    .send({ message: "patching... " + req.params.id, task: task });
 }
 
 module.exports = {
