@@ -4,7 +4,7 @@ const { User, validate, generateAuthToken } = require("../models/user");
 
 async function getMyUserData(req, res) {
   const me = await User.findOne({
-    attributes: ["id", "name", "email", "image"],
+    attributes: ["id", "name", "email", "image", "admin"],
     where: { id: req.user.id },
   });
   return res.send(me);
@@ -38,7 +38,7 @@ async function createUser(req, res) {
   return res
     .status(201)
     .header("x-auth-token", token)
-    .send(_.pick(userRes, ["id", "name", "email"]));
+    .send(_.pick(userRes, ["id", "name", "email", "image", "admin"]));
 }
 
 module.exports = {

@@ -20,7 +20,7 @@ async function authenticate(req, res) {
   const token = generateAuthToken(user.id);
   return res
     .header("x-auth-token", token)
-    .send(_.pick(user, ["id", "name", "email", "image"]));
+    .send(_.pick(user, ["id", "name", "email", "image", "admin"]));
 }
 
 function validate(req) {

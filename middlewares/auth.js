@@ -6,7 +6,10 @@ module.exports = async function (req, res, next) {
   if (!token) return res.status(401).send("Access denied. No token provided.");
 
   try {
-    const decoded = jwt.verify(token, "jwtPassword");
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_PASSWORD || "jwtPassword"
+    );
     req.user = decoded;
     const me = await User.findOne({
       attributes: ["id", "name", "email"],

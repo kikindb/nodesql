@@ -23,6 +23,10 @@ module.exports = {
         type: Sequelize.STRING,
       },
       image: Sequelize.STRING,
+      admin: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
