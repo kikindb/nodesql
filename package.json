@@ -1,12 +1,20 @@
 {
   "name": "nodesql",
   "version": "1.0.0",
-  "description": "",
+  "description": "Node JS Sequelize MySQL API REST",
   "main": "index.js",
   "scripts": {
     "test": "jest",
     "start": "npx wait-port mysqldb:3306\nnpx sequelize-cli db:migrate\nnpx sequelize-cli db:seed:all\nnode index",
-    "dev": "nodemon index"
+    "dev": "nodemon index",
+    "migrate:qa": "NODE_ENV=test npx sequelize-cli db:migrate --env test",
+    "seed:qa": "NODE_ENV=test npx sequelize-cli db:seed:all --env test",
+    "undo:qa": "NODE_ENV=testnpx sequelize-cli db:migrate:undo --env test",
+    "qa": "NODE_ENV=test node index",
+    "migrate:prod": "NODE_ENV=production npx sequelize-cli db:migrate --env production",
+    "seed:prod": "NODE_ENV=production npx sequelize-cli db:seed:all --env production",
+    "undo:prod": "NODE_ENV=production npx sequelize-cli db:migrate:undo --env production",
+    "prod": "NODE_ENV=production node index"
   },
   "keywords": [],
   "author": "Enrique Dick",
@@ -14,6 +22,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
     "express": "^4.17.1",
     "helmet": "^4.6.0",
     "joi": "^17.4.2",
