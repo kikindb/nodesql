@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "npx wait-port mysqldb:3306\nnpx sequelize-cli db:migrate\nnpx sequelize-cli db:seed:all\nnode index",
+    "start": "npx wait-port mysqldb:3306\nnpx sequelize-cli db:migrate\nnpx sequelize-cli db:seed:all\nNODE_ENV=development node index",
     "dev": "nodemon index",
     "migrate:qa": "NODE_ENV=test npx sequelize-cli db:migrate --env test",
     "seed:qa": "NODE_ENV=test npx sequelize-cli db:seed:all --env test",
