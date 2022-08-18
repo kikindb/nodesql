@@ -27,12 +27,7 @@ module.exports = function (app) {
         "*",
       ],
       credentials: true,
-      exposedHeaders: [
-        "Access-Control-Allow-Origin",
-        "Vary",
-        "Content-Length",
-        "x-auth-token",
-      ],
+      exposedHeaders: ["Vary", "Content-Length", "x-auth-token"],
     })
   );
   app.use(express.json());
